@@ -1,0 +1,11 @@
+<div style="text-align: center;">
+    <h1>{{post.title}}</h1>
+    <hr/>
+    <img src="{{post.image.url}}" alt="">
+    <div>
+        {{post.content|safe}}
+    </div>
+    <hr>
+    
+</div>
+<div style="color: blue;">rate : {{post.rating}}  </div><div style="color: blue;">author : {{post.author}}</div>
