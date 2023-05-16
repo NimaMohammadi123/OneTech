@@ -1,8 +1,40 @@
-<ul>
-    
-    {% for p in post %}
-        <li>
-            <a href="">{{p.title}}</a>
-        </li>
-    {% endfor %}
-</ul>  
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="page-section bg-light">
+    <div class="container">
+      <h1 class="text-center wow fadeInUp">Latest News</h1>
+      <div class="row mt-5">
+        {% for p in post %}
+        <div class="col-lg-4 py-2 wow zoomIn">
+          <div class="card-blog">
+            <div class="header">
+              <div class="post-category">
+                <a href="#">{{p.category.all|join:" , " }}</a>
+              </div>
+              <a href="blog-details.html" class="post-thumb">
+                <img src="{{p.image.url}}" alt="" height="150px">
+              </a>
+            </div>
+            <div class="body">
+              <h5 class="post-title"><a href="blog-details.html">{{p.title}}</a></h5>
+              <div class="site-info">
+                <div class="avatar mr-2">
+                  <div class="avatar-img">
+                    <img src="{% static 'img/avatar.png' %}" alt="">
+                  </div>
+                  <span>{{p.author}}</span>
+                </div>
+                <span class="mai-time"></span> {{p.created|date:"M d, Y"}}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        
+
+
+      </div>
+    </div>
+  </div>
+{% endblock content %}
