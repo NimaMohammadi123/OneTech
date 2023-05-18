@@ -19,7 +19,7 @@ def post_view (request):
 def post_detail(request,pk):
     post = get_object_or_404(Post , id=pk)
     comment_form = CommentForm()
-    comment = CommentPost.objects.filter(post=post.id)
+    comment = CommentPost.objects.filter(post=post.id).order_by('-created')[:10]
     if request.method == 'POST':
         if request.user.is_authenticated:
             form = CommentForm(request.POST)

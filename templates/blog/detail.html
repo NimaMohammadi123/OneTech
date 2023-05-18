@@ -1,27 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="card mb-3">
-    <img src="{{post.image.url}}" class="card-img-top" alt="..." style="width: 1350px ; height:600px;">
-    <div class="card-body">
-      <h5 class="card-title" style="text-align: center;">{{post.title}}</h5>
-      <p class="card-text">{{post.content|safe}}</p>
-      <hr>
-      <p class="card-text"><small class="text-body-secondary">{{post.created|date:"M d, Y"}}</small></p>
-      <h6>{{post.likes.count}} Like</h6>
+<br>
+<div class="card mb-3" style="max-width: 1350px;">
+  <div class="row g-0">
+    <br>
+    <div class="col-md-4">
+      <img src="{{post.image.url}}" class="img-fluid rounded-start" alt="...">
     </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
+        
+        <h6>{{post.likes.count}} Like</h6>
+        <br>
+        <form action="{% url 'post_like' post.id %}" method="POST">
+          {% csrf_token %}
+          {% if request.user in post.likes.all %}
+              <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-danger" >Unlike</button>
+          {% else %}
+              <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-primary">Like</button>
+          {% endif %}
+      
+      </form>
+      
+        <br>
+        <p class="card-text"><small class="text-body-secondary">{{post.content|safe}}</small></p>
+        <p class="card-text"><h6 class="text-body-secondary">{{post.created|date:"M d, Y"}}</h6></p>
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
     
 </div>
 
-<form action="{% url 'post_like' post.id %}" method="POST">
-    {% csrf_token %}
-    {% if request.user in post.likes.all %}
-        <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-danger" style="margin:10px 10px 10px 10px;">Unlike</button>
-    {% else %}
-        <button type="submit" name="post_id" value="{{post.id}}" class="btn btn-primary" style="margin:10px 10px 10px 10px;">Like</button>
-    {% endif %}
-
-</form>
 
 
 <br>
@@ -38,6 +54,8 @@
 <br>
 <hr>
 <div class="col-md-6 offset-md-3">
+  <h3>Comments</h3>
+  <br>
   {% for c in comment %}
   <div class="card text">
     <div class="card-header">
