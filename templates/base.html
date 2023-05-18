@@ -27,6 +27,14 @@
   <header>
     <div class="topbar">
       <div class="container">
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-success" role="alert">
+            {{message}}
+          </div>
+        {% endfor %}
+        {% endif %}
+        <br>
         <div class="row">
           <div class="col-sm-8 text-sm">
             <div class="site-info">

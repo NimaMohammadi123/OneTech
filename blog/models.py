@@ -38,8 +38,22 @@ class Post(models.Model):
     )
     status = models.CharField(max_length=50 , choices=STATUS , default="published")
     category = models.ManyToManyField(Category , blank=True)
+    likes = models.ManyToManyField(User , related_name='posts_like' , blank=True)
+    
     
     def __str__(self):
         return self.title
     
     
+class CommentPost(models.Model):
+    post = models.ForeignKey(Post , on_delete=models.CASCADE , related_name='comment')
+    user = models.ForeignKey(User , related_name='comment_user' , on_delete=models.CASCADE)
+    content = models.TextField()
+    email = models.EmailField()
+    created = models.DateTimeField(auto_now_add=True)
+    activate = models.BooleanField(default=True)
+    
+    def __str__(self):
+        return (f'{self.user} - post : {self.post}')
+    class Meta:
+        ordering = ('created',)
